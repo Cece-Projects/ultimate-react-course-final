@@ -217,6 +217,8 @@ console.log(true && "Some string");
 console.log(false && "Some string");
 console.log(hasMovieAdaptation && "This book has a movie.");
 
+// It returns the second value if the first one is
+// falsy: 0, '', null, undefined
 console.log("jonas" && "Some string");
 console.log(0 && "Some string");
 
@@ -231,22 +233,22 @@ console.log(book.reviews.librarything?.reviewsCount);
 const countWrong = book.reviews.librarything?.reviewsCount || "no data";
 console.log(countWrong);
 
-const count = book.reviews.librarything?.reviewsCount ?? "no data";
-count;
-
-// OPTIONAL CHANINING
-
 // Nullish coalescing operator (??)
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing
 // the ?? operator only considers null or undefined as 'falsy', 
 // aka if the left-hand side is 0 or '', it will return that
 // use it instead of || if we wanted to be able to return 0 or ''
 
+const count = book.reviews.librarything?.reviewsCount ?? "no data";
+count;
+
+// OPTIONAL CHANINING
+
 function getTotalReviewCount(book) {
-  const goodread = book.reviews.goodreads.reviewsCount;
+  const goodreads = book.reviews.goodreads.reviewsCount;
   const librarything = book.reviews.librarything?.reviewsCount ?? 0;
   librarything;
-  return goodread + librarything;
+  return goodreads + librarything;
 }
 
 console.log(getTotalReviewCount(book));
@@ -263,9 +265,9 @@ const titles = books.map((book) => book.title);
 // titles;
 
 function getTotalReviewCount(book) {
-  const goodread = book.reviews.goodreads?.reviewsCount;
+  const goodreads = book.reviews.goodreads?.reviewsCount;
   const librarything = book.reviews.librarything?.reviewsCount ?? 0;
-  return goodread + librarything;
+  return goodreads + librarything;
 }
 
 const essentialData = books.map((book) => ({
