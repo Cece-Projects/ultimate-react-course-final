@@ -1,3 +1,5 @@
+// Note: Use the Quokka.js extension in VS code to see the output in the code editor
+
 const data = [
   {
     id: 1,
@@ -66,7 +68,7 @@ const data = [
     publicationDate: "1965-01-01",
     author: "Frank Herbert",
     genres: ["science fiction", "novel", "adventure"],
-    hasMovieAdaptation: false,
+    hasMovieAdaptation: true,
     pages: 658,
     translations: {
       spanish: "",
@@ -143,9 +145,9 @@ function getBook(id) {
   return data.find((d) => d.id === id);
 }
 
-// Destructuring
-
 /*
+// DESTRUCTURING
+
 const book = getBook(3);
 book;
 
@@ -155,13 +157,18 @@ book;
 const { title, author, pages, publicationDate, genres, hasMovieAdaptation } =
   book;
 
-console.log(author, title, genres);
+console.log(title, author, genres);
+
+// THE REST AND SPREAD OPERATOR
 
 // const primaryGenre = genres[0];
 // const secondaryGenre = genres[1];
 
 const [primaryGenre, secondaryGenre, ...otherGenres] = genres;
-console.log(primaryGenre, secondaryGenre, otherGenres);
+
+console.log(primaryGenre);
+console.log(secondaryGenre);
+console.log(otherGenres);
 
 const newGenres = ["epic fantasy", ...genres];
 newGenres;
@@ -170,107 +177,139 @@ const updatedBook = {
   ...book,
   // Adding a new property
   moviePublicationDate: "2001-12-19",
-
   // Overwriting an existing property
   pages: 1210,
 };
 updatedBook;
 
+// ARROW FUNCTIONS
+
+// Function declaration:
 // function getYear(str) {
 //   return str.split("-")[0];
 // }
 
+// Function expression:
 const getYear = (str) => str.split("-")[0];
+
 console.log(getYear(publicationDate));
 
-const summary = `${title}, a ${pages}-page long book, was written by ${author} and published in ${getYear(
+// TEMPLATE LITERALS
+
+const summary = `${title} is a ${pages} page long book written by ${author} and published in ${getYear(
   publicationDate
-)}. The book has ${hasMovieAdaptation ? "" : "not"} been adapted as a movie`;
+)}. The book has ${hasMovieAdaptation ? "" : "not "}been adapted as a movie.`;
 summary;
+
+// TERNARY OPERATOR
 
 const pagesRange = pages > 1000 ? "over a thousand" : "less than 1000";
 pagesRange;
-console.log(`The book has ${pagesRange} pages`);
+
+console.log(`The book has ${pagesRange} pages.`);
+
+// SHORT CIRCUTING
+// Short circuting in logical operators means that in certain conditions
+// the operator immediately returns the first value
+// and not even look for the second value.
 
 console.log(true && "Some string");
 console.log(false && "Some string");
-console.log(hasMovieAdaptation && "This book has a movie");
+console.log(hasMovieAdaptation && "This book has a movie.");
 
-// falsy: 0, '', null, undefined
 console.log("jonas" && "Some string");
 console.log(0 && "Some string");
 
 console.log(true || "Some string");
 console.log(false || "Some string");
-
 console.log(book.translations.spanish);
 
-const spanishTranslation = book.translations.spanish || "NOT TRANSLATED";
+const spanishTranslation = book.translations.spanish || "not translated";
 spanishTranslation;
 
-// console.log(book.reviews.librarything.reviewsCount);
-// const countWrong = book.reviews.librarything.reviewsCount || "no data";
-// countWrong;
+console.log(book.reviews.librarything?.reviewsCount);
+const countWrong = book.reviews.librarything?.reviewsCount || "no data";
+console.log(countWrong);
 
-// const count = book.reviews.librarything.reviewsCount ?? "no data";
-// count;
+const count = book.reviews.librarything?.reviewsCount ?? "no data";
+count;
+
+// OPTIONAL CHANINING
+
+// Nullish coalescing operator (??)
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing
+// the ?? operator only considers null or undefined as 'falsy', 
+// aka if the left-hand side is 0 or '', it will return that
+// use it instead of || if we wanted to be able to return 0 or ''
 
 function getTotalReviewCount(book) {
-  const goodreads = book.reviews?.goodreads?.reviewsCount;
-  const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+  const goodread = book.reviews.goodreads.reviewsCount;
+  const librarything = book.reviews.librarything?.reviewsCount ?? 0;
   librarything;
-  return goodreads + librarything;
+  return goodread + librarything;
 }
 
 console.log(getTotalReviewCount(book));
 */
 
 /*
-function getTotalReviewCount(book) {
-  const goodreads = book.reviews?.goodreads?.reviewsCount;
-  const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
-  librarything;
-  return goodreads + librarything;
-}
+// THE MAP METHOD
 
-const books = getBooks();
-books;
-
-const x = [1, 2, 3, 4, 5].map((el) => el * 2);
-console.log(x);
+const nums = [1, 2, 3, 4, 5].map((num) => num * 2);
+// nums;
+const books = getBooks(data);
 
 const titles = books.map((book) => book.title);
-titles;
+// titles;
+
+function getTotalReviewCount(book) {
+  const goodread = book.reviews.goodreads?.reviewsCount;
+  const librarything = book.reviews.librarything?.reviewsCount ?? 0;
+  return goodread + librarything;
+}
 
 const essentialData = books.map((book) => ({
   title: book.title,
   author: book.author,
   reviewsCount: getTotalReviewCount(book),
 }));
-essentialData;
+// essentialData;
 
+// THE FILTER METHOD
 const longBooksWithMovie = books
   .filter((book) => book.pages > 500)
   .filter((book) => book.hasMovieAdaptation);
-longBooksWithMovie;
+// longBooksWithMovie;
 
-const adventureBooks = books
-  .filter((books) => books.genres.includes("adventure"))
+const adventureBookTitles = books
+  .filter((book) => book.genres.includes("adventure"))
   .map((book) => book.title);
-adventureBooks;
+
+// adventureBookTitles;
+
+// THE REDUCE METHOD
 
 const pagesAllBooks = books.reduce((sum, book) => sum + book.pages, 0);
-pagesAllBooks;
+// pagesAllBooks;
 
-const arr = [3, 7, 1, 9, 6];
+// THE SORT METHOD
+// The sort method mutates the original array
+// We can make a copy of the original array by applying slice before the sort
+const arr = [3, 4, 7, 9, 8, 1, 2];
 const sorted = arr.slice().sort((a, b) => a - b);
-sorted;
-arr;
+// sorted;
+// arr;
 
-const sortedByPages = books.slice().sort((a, b) => a.pages - b.pages);
-sortedByPages;
+const sortedByPages = books.slice().sort((a, b) => b.pages - a.pages);
+// sortedByPages
 
-// 1) Add book object to array
+// WORKING WITH IMMUTABLE ARRAYS
+// How to add, delete, update elements of an array
+// Without mutating the original array
+
+// ADD ELEMENTS TO AN ARRAY WITHOUT MUTATING THE ARRAY
+
+// 1) Add a book object to the array
 const newBook = {
   id: 6,
   title: "Harry Potter and the Chamber of Secrets",
@@ -279,22 +318,26 @@ const newBook = {
 const booksAfterAdd = [...books, newBook];
 booksAfterAdd;
 
-// 2) Delete book object from array
+// 2) Delete a book object from the array
 const booksAfterDelete = booksAfterAdd.filter((book) => book.id !== 3);
 booksAfterDelete;
 
-// 3) Update book object in the array
+// 3) Update a book onject in the array
 const booksAfterUpdate = booksAfterDelete.map((book) =>
   book.id === 1 ? { ...book, pages: 1210 } : book
 );
 booksAfterUpdate;
 */
 
+// ASYNCHRONOUS JAVASCRIPT - PROMISES
+
 // fetch("https://jsonplaceholder.typicode.com/todos")
 //   .then((res) => res.json())
 //   .then((data) => console.log(data));
 
-// console.log("jonas");
+// console.log("Cece");
+
+// ASYNCHRONOUS JAVASCRIPT: async / await
 
 async function getTodos() {
   const res = await fetch("https://jsonplaceholder.typicode.com/todos");
@@ -305,6 +348,6 @@ async function getTodos() {
 }
 
 const todos = getTodos();
-console.log(todos);
 
-console.log("jonas");
+console.log(todos);
+console.log("Cece");
