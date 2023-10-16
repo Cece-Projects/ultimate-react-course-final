@@ -1,0 +1,41 @@
+:root {
+  --grey-border: #e7e7e7;
+  --grey-bg: #f7f7f7;
+  --white: #ffffff;
+  --red: #960019;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  padding: 20px;
+}
+
+.flashcards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.flashcards div {
+  border: 1px solid var(--grey-border);
+  background-color: var(--grey-bg);
+  border-radius: 7px;
+  aspect-ratio: 2 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  cursor: pointer;
+}
+
+div.selected {
+  border: 1px solid var(--red);
+  background-color: var(--red);
+  color: var(--white);
+  font-weight: bold;
+}
