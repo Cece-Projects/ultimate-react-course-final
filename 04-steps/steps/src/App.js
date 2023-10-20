@@ -18,30 +18,29 @@ export default function App() {
 function Steps() {
   const [step, setStep] = useState(1);
   const [isOpen, setIsOpen] = useState(true);
-
-  // const [test, setTest] = useState({ name: "Jonas" });
+  // const [test, setTest] = useState({ name: "Cece" });
 
   function handlePrevious() {
-    if (step > 1) setStep((s) => s - 1);
+    if (step > 1) {
+      setStep((_step) => _step - 1);
+    }
   }
 
   function handleNext() {
     if (step < 3) {
-      setStep((s) => s + 1);
-      // setStep((s) => s + 1);
+      setStep((_step) => _step + 1);
+      // setTest({ name: "Anna" });
     }
-
-    // BAD PRACTICE
-    // test.name = "Fred";
-    // setTest({ name: "Fred" });
   }
 
   return (
     <div>
-      <button className="close" onClick={() => setIsOpen((is) => !is)}>
+      <button
+        className="close"
+        onClick={() => setIsOpen((_isOpen) => !_isOpen)}
+      >
         &times;
       </button>
-
       {isOpen && (
         <div className="steps">
           <div className="numbers">
@@ -57,14 +56,14 @@ function Steps() {
 
           <div className="buttons">
             <button
-              style={{ backgroundColor: "#7950f2", color: "#fff" }}
               onClick={handlePrevious}
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
             >
               Previous
             </button>
             <button
-              style={{ backgroundColor: "#7950f2", color: "#fff" }}
               onClick={handleNext}
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
             >
               Next
             </button>
