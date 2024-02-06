@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Lilita+One&display=swap");
+
 :root {
   --color-lightest: #fff4e6;
   --color-light: #ffe8cc;
@@ -23,6 +25,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #282c34;
+}
+
+h1 {
+  text-align: center;
+  margin: 80px 0 30px;
+  font-family: "Lilita One", sans-serif;
+  font-size: 35px;
+  color: var(--color-light);
 }
 
 .app {
@@ -55,6 +66,9 @@ body {
   gap: 0.4rem;
   font-size: 1.4rem;
   margin-bottom: 2rem;
+  background-color: var(--color-lightest);
+  border-radius: 7px;
+  padding: 1.2rem;
 }
 
 .sidebar li {
@@ -70,7 +84,7 @@ body {
 
 .selected,
 .sidebar li:hover {
-  background-color: var(--color-lightest);
+  background-color: var(--color-light);
 }
 
 .sidebar li img {
@@ -96,7 +110,6 @@ body {
 
 .sidebar > .button {
   float: right;
-  margin-right: 1.2rem;
 }
 
 .green {
