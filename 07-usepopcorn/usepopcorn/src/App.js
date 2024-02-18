@@ -50,10 +50,10 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-export default function App() {
+/** App Component */
+function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
-
   return (
     <>
       <NavBar>
@@ -75,6 +75,8 @@ export default function App() {
   );
 }
 
+/** NavBar and Related Components */
+
 function NavBar({ children }) {
   return (
     <nav className="nav-bar">
@@ -95,7 +97,6 @@ function Logo() {
 
 function Search() {
   const [query, setQuery] = useState("");
-
   return (
     <input
       className="search"
@@ -115,6 +116,8 @@ function NumResults({ movies }) {
   );
 }
 
+/** Main and Related Components */
+
 function Main({ children }) {
   return <main className="main">{children}</main>;
 }
@@ -127,36 +130,12 @@ function Box({ children }) {
       <button className="btn-toggle" onClick={() => setIsOpen((open) => !open)}>
         {isOpen ? "–" : "+"}
       </button>
-
       {isOpen && children}
     </div>
   );
 }
 
-/*
-function WatchedBox() {
-  const [watched, setWatched] = useState(tempWatchedData);
-  const [isOpen2, setIsOpen2] = useState(true);
-
-  return (
-    <div className="box">
-      <button
-        className="btn-toggle"
-        onClick={() => setIsOpen2((open) => !open)}
-      >
-        {isOpen2 ? "–" : "+"}
-      </button>
-
-      {isOpen2 && (
-        <>
-          <WatchedSummary watched={watched} />
-          <WatchedMoviesList watched={watched} />
-        </>
-      )}
-    </div>
-  );
-}
-*/
+/** Left Box - Movie List */
 
 function MovieList({ movies }) {
   return (
@@ -170,9 +149,10 @@ function MovieList({ movies }) {
 
 function Movie({ movie }) {
   return (
-    <li>
+    <li key={movie.imdbID}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
+
       <div>
         <p>
           <span>🗓</span>
@@ -183,11 +163,12 @@ function Movie({ movie }) {
   );
 }
 
+/** Right Box - Watched Movies Summary and List */
+
 function WatchedSummary({ watched }) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
   const avgRuntime = average(watched.map((movie) => movie.runtime));
-
   return (
     <div className="summary">
       <h2>Movies you watched</h2>
@@ -216,7 +197,7 @@ function WatchedSummary({ watched }) {
 function WatchedMoviesList({ watched }) {
   return (
     <ul className="list">
-      {watched.map((movie) => (
+      {watched?.map((movie) => (
         <WatchedMovie movie={movie} key={movie.imdbID} />
       ))}
     </ul>
@@ -228,6 +209,7 @@ function WatchedMovie({ movie }) {
     <li>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
+
       <div>
         <p>
           <span>⭐️</span>
@@ -245,3 +227,5 @@ function WatchedMovie({ movie }) {
     </li>
   );
 }
+
+export default App;
